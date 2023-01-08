@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <style>
+            #container {
+                width: 100%;
+                height: 10px;
+                border: 2px solid grey;
+                border-radius: 5px;
+            }
+            #progress-bar {
+                width: 1px;
+                height: 10px;
+                background: grey;   
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="progress-bar"></div>
+        </div>
+        <script>
+            var COLOR = new Object();
+            COLOR["daily"] = "rgba(217, 115, 13, 1)";
+            COLOR["weekly"] = "rgba(212, 76, 71, 1)";
+            COLOR["monthly"] = "rgba(51, 126, 169, 1)";
+            COLOR["yearly"] = "rgba(68, 131, 97, 1)";
+
+            var container = document.getElementById("container");
+            var progressBar = document.getElementById("progress-bar");
+            
+            var setColor = function(type) {
+                container.style.borderColor = COLOR[type];
+                progressBar.style.backgroundColor = COLOR[type];
+            };
+           
+            var setWidth = function(type) {
+                w = 0;
+                switch(type) {
+                    case "daily":
+                        var current = (new Date()).getHours();
+                        var total = 24;
+                        w = Math.ceil(current / total * 100);
+                        break;
+                    case "weekly":
+                        var current = (new Date()).getDay();
+                        var total = 7;
+                        w = Math.ceil(current / total * 100);
+                        break;
+                    case "monthly":
+                        var current = new Date();
+                        var total = new Date(current.getFullYear(), current.getMonth(), 0);
+                        w = Math.ceil(current.getDate() / total.getDate() * 100);
+                        break;
+                    case "yearly":
+                        var current = new Date();
+                        var start = new Date(current.getFullYear(), 0, 0);
+                        var diff = current - start;
+                        var oneDay = 1000 * 60 * 60 * 24;
+                        w = Math.floor(diff / oneDay)
+                        break;
+                }
+                progressBar.style.width = w + "%";
+            };
+            
+            var type = window.location.search.substr(1) || "daily"; // url?(daily|weekly|monthly|yearly)
+            setColor(type);
+            setWidth(type);
+            setInterval(setWidth, 1000 * 60, type);
+        </script>
+    </body>
+</html>

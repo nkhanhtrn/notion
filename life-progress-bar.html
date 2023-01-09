@@ -52,26 +52,26 @@
                     case "day":
                         var current = (new Date()).getHours();
                         var total = 24;
-                        w = Math.ceil(current / total * 100);
+                        w = Math.floor(current / total * 100);
                         break;
                     case "week":
                         var current = (new Date()).getDay() * 24 + (new Date()).getHours();
                         var total = 7 * 24;
-                        w = Math.ceil(current / total * 100);
+                        w = Math.floor(current / total * 100);
                         break;
                     case "month":
                         var current_date = new Date()
                         var current = current_date.getDate() * 24 + current_date.getHours();
-                        var total = (new Date(current.getFullYear(), current.getMonth(), 0)).getDate() * 24;
-                        w = Math.ceil(current / total * 100);
+                        var total = (new Date(current_date.getFullYear(), current_date.getMonth(), 0)).getDate() * 24;
+                        w = Math.floor(current / total * 100);
                         break;
                     case "year":
                         var current = new Date();
                         var start = new Date(current.getFullYear(), 0, 0);
-                        var diff = current - start;
-                        var oneDay = 1000 * 60 * 60 * 24;
-                        var current = diff.getDate() * 24 + diff.getHours();
-                        w = Math.floor(diff / oneDay)
+                        var current = (current - start) / 3600 / 1000;
+                        var isLeap = new Date(current.getFullYear(), 1, 29).getDate() === 29;
+                        var total = isLeap ? 366 * 24 : 365 * 24;
+                        w = Math.floor(current / total * 100)
                         break;
                 }
                 progressBar.style.width = w + "%";

@@ -60,7 +60,8 @@
                         w = Math.ceil(current / total * 100);
                         break;
                     case "month":
-                        var current = (new Date()).getDate() * 24 + (new Date()).getHours();
+                        var current_date = new Date()
+                        var current = current_date.getDate() * 24 + current_date.getHours();
                         var total = (new Date(current.getFullYear(), current.getMonth(), 0)).getDate() * 24;
                         w = Math.ceil(current / total * 100);
                         break;

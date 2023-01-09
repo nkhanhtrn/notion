@@ -55,20 +55,21 @@
                         w = Math.ceil(current / total * 100);
                         break;
                     case "week":
-                        var current = (new Date()).getDay();
-                        var total = 7;
+                        var current = (new Date()).getDay() * 24 + (new Date()).getHours();
+                        var total = 7 * 24;
                         w = Math.ceil(current / total * 100);
                         break;
                     case "month":
-                        var current = new Date();
-                        var total = new Date(current.getFullYear(), current.getMonth(), 0);
-                        w = Math.ceil(current.getDate() / total.getDate() * 100);
+                        var current = (new Date()).getDate() * 24 + (new Date()).getHours();
+                        var total = (new Date(current.getFullYear(), current.getMonth(), 0)).getDate() * 24;
+                        w = Math.ceil(current / total * 100);
                         break;
                     case "year":
                         var current = new Date();
                         var start = new Date(current.getFullYear(), 0, 0);
                         var diff = current - start;
                         var oneDay = 1000 * 60 * 60 * 24;
+                        var current = diff.getDate() * 24 + diff.getHours();
                         w = Math.floor(diff / oneDay)
                         break;
                 }

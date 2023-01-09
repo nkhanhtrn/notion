@@ -66,10 +66,10 @@
                         w = Math.floor(current / total * 100);
                         break;
                     case "year":
-                        var current = new Date();
-                        var start = new Date(current.getFullYear(), 0, 0);
-                        var current = (current - start) / 3600 / 1000;
-                        var isLeap = new Date(current.getFullYear(), 1, 29).getDate() === 29;
+                        var current_obj = new Date();
+                        var start = new Date(current_obj.getFullYear(), 0, 0);
+                        var current = (current_obj - start) / 3600 / 1000;
+                        var isLeap = new Date(current_obj.getFullYear(), 1, 29).getDate() === 29;
                         var total = isLeap ? 366 * 24 : 365 * 24;
                         w = Math.floor(current / total * 100)
                         break;

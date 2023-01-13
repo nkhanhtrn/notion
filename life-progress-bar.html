@@ -1,86 +1,92 @@
 <html>
-    <head>
-        <style>
-            body {
-                margin-top: 25px;
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
-            }
-            #container {
-                width: 100%;
-                height: 14px;
-                border: 2px solid grey;
-                border-radius: 5px;
-            }
-            #progress-bar {
-                width: 1px;
-                height: 10px;
-                background: grey;
-                margin: 2px;
-            }
-            #legend {
-            	text-align: center;
-                padding: 7px 5px;
-                text-transform: capitalize;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="container">
-            <div id="progress-bar"></div>
-            <div id="legend"></div>
-        </div>
-        <script>
-            var COLOR = new Object();
-            COLOR["day"] = "rgba(217, 115, 13, 1)";
-            COLOR["week"] = "rgba(212, 76, 71, 1)";
-            COLOR["month"] = "rgba(51, 126, 169, 1)";
-            COLOR["year"] = "rgba(68, 131, 97, 1)";
 
-            var container = document.getElementById("container");
-            var progressBar = document.getElementById("progress-bar");
-            var legend = document.getElementById("legend");
-            
-            var setColor = function(type) {
-                container.style.borderColor = COLOR[type];
-                progressBar.style.backgroundColor = COLOR[type];
-                legend.style.color = COLOR[type];
-            };
-           
-            var setWidth = function(type) {
-                w = 0;
-                switch(type) {
-                    case "day":
-                        var current = (new Date()).getHours();
-                        var total = 24;
-                        w = Math.floor(current / total * 100);
-                        break;
-                    case "week":
-                        var current = (new Date()).getDay() * 24 + (new Date()).getHours();
-                        var total = 7 * 24;
-                        w = Math.floor(current / total * 100);
-                        break;
-                    case "month":
-                        var current_date = new Date()
-                        var current = current_date.getDate() * 24 + current_date.getHours();
-                        var total = (new Date(current_date.getFullYear(), current_date.getMonth(), 0)).getDate() * 24;
-                        w = Math.floor(current / total * 100);
-                        break;
-                    case "year":
-                        var current_obj = new Date();
-                        var start = new Date(current_obj.getFullYear(), 0, 0);
-                        var current = (current_obj - start) / 3600 / 1000;
-                        var isLeap = new Date(current_obj.getFullYear(), 1, 29).getDate() === 29;
-                        var total = isLeap ? 366 * 24 : 365 * 24;
-                        w = Math.floor(current / total * 100)
-                        break;
-                }
-                progressBar.style.width = w + "%";
-                legend.innerHTML = type + ": " + w + "%";
-            };
-            
-            var type = window.location.search.substr(1) || "day"; // url?(day|week|month|year)
-            setColor(type);
-            setWidth(type);
-        </script>
-    </body>
+<head>
+	<style>
+		body {
+			margin-top: 25px;
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+		}
+
+		#container {
+			width: 100%;
+			height: 14px;
+			border: 2px solid grey;
+			border-radius: 5px;
+		}
+
+		#progress-bar {
+			width: 1px;
+			height: 10px;
+			background: grey;
+			margin: 2px;
+		}
+
+		#legend {
+			text-align: center;
+			padding: 7px 5px;
+			text-transform: capitalize;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<div id="progress-bar"></div>
+		<div id="legend"></div>
+	</div>
+	<script>
+		var COLOR = new Object();
+		COLOR["day"] = "rgba(217, 115, 13, 1)";
+		COLOR["week"] = "rgba(212, 76, 71, 1)";
+		COLOR["month"] = "rgba(51, 126, 169, 1)";
+		COLOR["year"] = "rgba(68, 131, 97, 1)";
+
+		var container = document.getElementById("container");
+		var progressBar = document.getElementById("progress-bar");
+		var legend = document.getElementById("legend");
+
+		var setColor = function (type) {
+			container.style.borderColor = COLOR[type];
+			progressBar.style.backgroundColor = COLOR[type];
+			legend.style.color = COLOR[type];
+		};
+
+		var setWidth = function (type) {
+			w = 0;
+			switch (type) {
+				case "day":
+					var current = (new Date()).getHours();
+					var total = 24;
+					w = Math.floor(current / total * 100);
+					break;
+				case "week":
+					var current = (new Date()).getDay() * 24 + (new Date()).getHours();
+					var total = 7 * 24;
+					w = Math.floor(current / total * 100);
+					break;
+				case "month":
+					var current_date = new Date()
+					var current = current_date.getDate() * 24 + current_date.getHours();
+					var total = (new Date(current_date.getFullYear(), current_date.getMonth(), 0)).getDate() * 24;
+					w = Math.floor(current / total * 100);
+					break;
+				case "year":
+					var current_obj = new Date();
+					var start = new Date(current_obj.getFullYear(), 0, 0);
+					var current = (current_obj - start) / 3600 / 1000;
+					var isLeap = new Date(current_obj.getFullYear(), 1, 29).getDate() === 29;
+					var total = isLeap ? 366 * 24 : 365 * 24;
+					w = Math.floor(current / total * 100)
+					break;
+			}
+			progressBar.style.width = w + "%";
+			legend.innerHTML = type + ": " + w + "%";
+		};
+
+		var type = window.location.search.substr(1) || "day"; // url?(day|week|month|year)
+		setColor(type);
+		setWidth(type);
+	</script>
+</body>
+
 </html>
